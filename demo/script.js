@@ -8,3 +8,5 @@ WoWWindow.setBackgroundImage(
 
 const SettingsWindow = new Window(1, 1, "Example title v1");
 SettingsWindow.setBackgroundColor("gray");
+
+const emptyWindow = new Window();

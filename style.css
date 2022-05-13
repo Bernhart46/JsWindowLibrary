@@ -13,7 +13,7 @@
 
 .window {
   position: absolute;
-  background-color: white;
+  background-color: lightgray;
   border: solid black 1px;
   overflow: hidden;
   background-size: cover;
@@ -27,9 +27,10 @@
   top: 0;
   height: 30px;
   line-height: 30px;
-  background-color: darkgray;
+  background-color: rgb(56, 57, 60);
   text-indent: 5px;
   cursor: pointer;
+  color: lightgray;
   -webkit-user-select: none; /* Chrome all / Safari all */
   -moz-user-select: none; /* Firefox all */
   -ms-user-select: none; /* IE 10+ */
@@ -38,38 +39,36 @@
 
 .exit-button {
   position: absolute;
-  top: 4px;
-  right: 5px;
-  width: 22px;
-  height: 22px;
-  line-height: 23px;
-  text-indent: 4.3px;
+  top: 0;
+  right: 0;
+  width: 40px;
+  height: 30px;
+  line-height: 30px;
+  text-indent: calc(50% - 7.5px);
   font-family: "Arial";
   font-weight: bold;
-  border-radius: 50%;
 }
 
 .exit-button:hover {
-  background-color: rgb(235, 6, 6);
+  background-color: rgb(232, 17, 32);
   color: white;
   transition: 0.5s;
 }
 
 .maximize-button {
   position: absolute;
-  top: 4px;
-  right: 30px;
-  width: 22px;
-  height: 22px;
-  line-height: 22px;
-  text-indent: 3px;
+  top: 0px;
+  right: 40px;
+  width: 40px;
+  height: 30px;
+  line-height: 30px;
+  text-indent: calc(50% - 7.5px);
   font-family: "Arial";
   font-weight: bold;
-  border-radius: 50%;
 }
 
 .maximize-button:hover {
-  background-color: gray;
+  background-color: rgb(76, 77, 80);
   transition: 0.5s;
 }
 
