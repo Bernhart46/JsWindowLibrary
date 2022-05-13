@@ -19,6 +19,8 @@ const exampleWindow = new Window(1, 1, "Example Title v1");
 // exampleWindow is a Window with a title of 'Example Title v1' and a size of 275x200 pixels.
 ```
 
+![Alt text](/demo/screenshot1.png?raw=true "Screenshot")
+
 In the future **(not implemented yet)** the Window class will take an object with various information:
 
 ```js
@@ -44,6 +46,7 @@ The options object and its values will be optional.
 - Moving the window
 - Resizing the Window (borders and corners)
 - Close button
+- Selecting a Window (by clicking, the window comes forward (z-index))
 
 ##### - Future implementation:
 
