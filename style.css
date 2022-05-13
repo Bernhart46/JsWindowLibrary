@@ -4,6 +4,11 @@
   --pos: 5px;
 }
 
+#root {
+  width: 100vw;
+  height: 100vh;
+}
+
 /* --- Window --- */
 
 .window {
@@ -13,14 +18,6 @@
   overflow: hidden;
   background-size: cover;
   border-radius: 5px;
-}
-
-#root {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100vh;
-  width: 100vw;
 }
 
 /* --- TOP-BAR --- */
