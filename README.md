@@ -59,4 +59,3 @@ The options object and its values will be optional.
 ##### - Known bugs:
 
 - Cursor icon bug when resizing
-- Resize bug because of the root top: 0, left: 0 (before this, there was margin 0)

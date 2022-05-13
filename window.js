@@ -228,7 +228,7 @@ class Window {
       this.body.style.bottom =
         root.offsetHeight -
         (root.offsetHeight - this.resizePosition.bottom) -
-        17 +
+        2 +
         "px";
       this.height =
         root.offsetHeight - this.resizePosition.bottom + 7 - e.clientY - 5;
@@ -250,7 +250,7 @@ class Window {
       this.body.style.right =
         root.offsetWidth -
         (root.offsetWidth - this.resizePosition.right) -
-        17 +
+        2 +
         "px";
       this.width =
         root.offsetWidth - this.resizePosition.right + 7 - e.clientX - 5;
