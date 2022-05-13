@@ -55,7 +55,6 @@ The options object and its values will be optional.
 - Custom scroller (bottom and right side)
 - add a Content method to implement HTML, CSS, and JS in the Window
 - Cleaning the code, because it's ugly af :grin:
-- Add SVG icons, because the icons I use is not supported everywhere
 
 ##### - Known bugs:
 
