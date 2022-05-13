@@ -1,4 +1,6 @@
 "use strict";
+import { maximizeIcon1, maximizeIcon2, closeIcon } from "./icons.js";
+
 const root = document.getElementById("root");
 let zIndex = 0;
 
@@ -92,11 +94,11 @@ class Window {
 
     this.exitButton = document.createElement("div");
     this.exitButton.setAttribute("class", "exit-button");
-    this.exitButton.innerText = "✖";
+    this.exitButton.innerHTML = closeIcon("#DEDEDE");
 
     this.maximizeButton = document.createElement("div");
     this.maximizeButton.setAttribute("class", "maximize-button");
-    this.maximizeButton.innerText = "🗖";
+    this.maximizeButton.innerHTML = maximizeIcon1("#DEDEDE");
 
     this.topBar.appendChild(this.exitButton);
     this.topBar.appendChild(this.maximizeButton);
@@ -187,7 +189,7 @@ class Window {
       `;
 
       this.topBar.style.width = `${this.width}px`;
-      this.maximizeButton.innerText = "🗖";
+      this.maximizeButton.innerHTML = maximizeIcon1("#DEDEDE");
       return;
     }
     if (!this.isMaximized) {
@@ -204,7 +206,7 @@ class Window {
       border-radius: 0px;
     `;
       this.topBar.style.width = "calc(100vw - 2px)";
-      this.maximizeButton.innerText = "🗗";
+      this.maximizeButton.innerHTML = maximizeIcon2("#DEDEDE");
       return;
     }
   }
