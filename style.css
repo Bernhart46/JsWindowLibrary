@@ -46,17 +46,34 @@
   width: 22px;
   height: 22px;
   line-height: 23px;
-  color: black;
   text-indent: 4.3px;
   font-family: "Arial";
   font-weight: bold;
   border-radius: 50%;
-  transition: 0.5s;
 }
 
 .exit-button:hover {
   background-color: rgb(235, 6, 6);
   color: white;
+  transition: 0.5s;
+}
+
+.maximize-button {
+  position: absolute;
+  top: 4px;
+  right: 30px;
+  width: 22px;
+  height: 22px;
+  line-height: 22px;
+  text-indent: 3px;
+  font-family: "Arial";
+  font-weight: bold;
+  border-radius: 50%;
+}
+
+.maximize-button:hover {
+  background-color: gray;
+  transition: 0.5s;
 }
 
 /* --- BORDERS & CORNERS --- */

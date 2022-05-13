@@ -16,6 +16,7 @@ class Window {
       WindowHeight > this.#minHeight ? WindowHeight : this.#minHeight;
     this.title = WindowTitle;
     this.createWindow();
+    this.isMaximized = false;
     this.isMoving = false;
     this.isResizing = false;
     this.position = {
@@ -92,18 +93,28 @@ class Window {
     this.exitButton = document.createElement("div");
     this.exitButton.setAttribute("class", "exit-button");
     this.exitButton.innerText = "✖";
+
+    this.maximizeButton = document.createElement("div");
+    this.maximizeButton.setAttribute("class", "maximize-button");
+    this.maximizeButton.innerText = "🗖";
+
     this.topBar.appendChild(this.exitButton);
+    this.topBar.appendChild(this.maximizeButton);
     this.topBar.setAttribute("draggable", "false");
     this.topBar.onmousedown = (e) => {
       e.preventDefault();
       if (e.target !== this.topBar) return;
       this.isMoving = true;
-      this.position = {
-        top: e.offsetY,
-        left: e.offsetX,
-      };
+      if (!this.isMaximized) {
+        this.position = {
+          top: e.offsetY,
+          left: e.offsetX,
+        };
+      }
     };
     this.exitButton.onclick = this.exitWindow.bind(this);
+    this.maximizeButton.onclick = this.maximizeWindow.bind(this);
+    this.topBar.ondblclick = this.maximizeWindow.bind(this);
   }
 
   createBorder() {
@@ -164,14 +175,48 @@ class Window {
     root.removeChild(node);
   }
 
+  maximizeWindow() {
+    if (this.isMaximized) {
+      this.isMaximized = !this.isMaximized;
+      this.body.style.cssText += `
+        width: ${this.width}px;
+        height: ${this.height}px;
+        border-radius: 5px;
+        top: ${this.position.top}px;
+        left: ${this.position.left}px;
+      `;
+
+      this.topBar.style.width = `${this.width}px`;
+      this.maximizeButton.innerText = "🗖";
+      return;
+    }
+    if (!this.isMaximized) {
+      this.isMaximized = !this.isMaximized;
+      this.position = {
+        top: this.body.offsetTop,
+        left: this.body.offsetLeft,
+      };
+      this.body.style.cssText += `
+      top: 0;
+      left: 0;
+      width: calc(100vw - 2px);
+      height:calc(100vh - 2px);
+      border-radius: 0px;
+    `;
+      this.topBar.style.width = "calc(100vw - 2px)";
+      this.maximizeButton.innerText = "🗗";
+      return;
+    }
+  }
+
   moveWindow(e) {
-    if (!this.isMoving) return;
+    if (!this.isMoving || this.isMaximized) return;
     this.body.style.top = e.clientY - this.position.top + "px";
     this.body.style.left = e.clientX - this.position.left + "px";
   }
 
   resizeWindow(e, type) {
-    if (!this.isResizing) return;
+    if (!this.isResizing || this.isMaximized) return;
     const bottomF = () => {
       this.height = e.clientY - this.body.offsetTop;
       this.height =

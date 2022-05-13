@@ -47,12 +47,16 @@ The options object and its values will be optional.
 - Resizing the Window (borders and corners)
 - Close button
 - Selecting a Window (by clicking, the window comes forward (z-index))
+- Maximize button (Maximizing works with double-click on the topBar too)
 
 ##### - Future implementation:
 
-- Maximize button
 - information object in the new Window();
 - Custom scroller (bottom and right side)
-- Fixing some cursor bugs (when resizing and moving)
 - add a Content method to implement HTML, CSS, and JS in the Window
 - Cleaning the code, because it's ugly af :grin:
+
+##### - Known bugs:
+
+- Cursor icon bug when resizing
+- Resize bug because of the root top: 0, left: 0 (before this, there was margin 0)
