@@ -1,0 +1,122 @@
+:root {
+  --outside: -5px;
+  --width: 10px;
+  --pos: 5px;
+}
+
+/* --- Window --- */
+
+.window {
+  position: absolute;
+  background-color: white;
+  border: solid black 1px;
+  overflow: hidden;
+  background-size: cover;
+  border-radius: 5px;
+}
+
+#root {
+  height: 100vh;
+  width: 100vw;
+}
+
+/* --- TOP-BAR --- */
+
+.top-bar {
+  position: absolute;
+  top: 0;
+  height: 30px;
+  line-height: 30px;
+  background-color: darkgray;
+  text-indent: 5px;
+  cursor: pointer;
+  -webkit-user-select: none; /* Chrome all / Safari all */
+  -moz-user-select: none; /* Firefox all */
+  -ms-user-select: none; /* IE 10+ */
+  user-select: none; /* Likely future */
+}
+
+.exit-button {
+  position: absolute;
+  top: 4px;
+  right: 5px;
+  width: 22px;
+  height: 22px;
+  line-height: 23px;
+  color: black;
+  text-indent: 4.3px;
+  font-family: "Arial";
+  font-weight: bold;
+  border-radius: 50%;
+  transition: 0.5s;
+}
+
+.exit-button:hover {
+  background-color: rgb(235, 6, 6);
+  color: white;
+}
+
+/* --- BORDERS & CORNERS --- */
+
+.border {
+  position: absolute;
+}
+
+.TOP_BORDER-border {
+  width: calc(100% - 10px);
+  height: var(--width);
+  top: var(--outside);
+  left: var(--pos);
+  cursor: ns-resize;
+}
+.BOTTOM_BORDER-border {
+  width: calc(100% - 10px);
+  height: var(--width);
+  bottom: var(--outside);
+  left: var(--pos);
+  cursor: ns-resize;
+}
+.RIGHT_BORDER-border {
+  width: var(--width);
+  height: calc(100% - 10px);
+  top: var(--pos);
+  right: var(--outside);
+  cursor: ew-resize;
+}
+.LEFT_BORDER-border {
+  width: var(--width);
+  height: calc(100% - 10px);
+  top: var(--pos);
+  left: var(--outside);
+  cursor: ew-resize;
+}
+
+.corner {
+  position: absolute;
+  width: var(--width);
+  height: var(--width);
+}
+
+.TOP_LEFT_CORNER-corner {
+  top: var(--outside);
+  left: var(--outside);
+  cursor: nwse-resize;
+}
+
+.TOP_RIGHT_CORNER-corner {
+  top: var(--outside);
+  right: var(--outside);
+  cursor: nesw-resize;
+}
+
+.BOTTOM_LEFT_CORNER-corner {
+  bottom: var(--outside);
+  left: var(--outside);
+  cursor: nesw-resize;
+}
+
+.BOTTOM_RIGHT_CORNER-corner {
+  bottom: var(--outside);
+  right: var(--outside);
+  cursor: nwse-resize;
+}
