@@ -109,13 +109,13 @@ class Window {
   createTopBarButtons() {
     this.exitButton = document.createElement('div');
     this.exitButton.setAttribute('class', 'exit-button');
-    this.exitButton.innerHTML = closeIcon('#DEDEDE');
+    this.exitButton.innerHTML = closeIcon('#DEDEDE', '75%');
     this.exitButton.onclick = this.exitWindow.bind(this);
     this.topBar.appendChild(this.exitButton);
 
     this.maximizeButton = document.createElement('div');
     this.maximizeButton.setAttribute('class', 'maximize-button');
-    this.maximizeButton.innerHTML = maximizeIcon1('#DEDEDE');
+    this.maximizeButton.innerHTML = maximizeIcon1('#DEDEDE', '75%');
     this.maximizeButton.onclick = this.maximizeWindow.bind(this);
     this.topBar.appendChild(this.maximizeButton);
   }
@@ -196,7 +196,7 @@ class Window {
       `;
 
       this.topBar.style.width = `${this.width}px`;
-      this.maximizeButton.innerHTML = maximizeIcon1('#DEDEDE');
+      this.maximizeButton.innerHTML = maximizeIcon1('#DEDEDE', '75%');
       return;
     }
     if (!this.isMaximized) {
@@ -213,7 +213,7 @@ class Window {
       border-radius: 0px;
     `;
       this.topBar.style.width = 'calc(100vw - 2px)';
-      this.maximizeButton.innerHTML = maximizeIcon2('#DEDEDE');
+      this.maximizeButton.innerHTML = maximizeIcon2('#DEDEDE', '75%');
     }
   }
 
@@ -236,9 +236,8 @@ class Window {
 
     const calculateTopResizing = () => {
       this.body.style.top = 'auto';
-      this.body.style.bottom = `${
-        root.offsetHeight - (root.offsetHeight - this.resizePosition.bottom) - 2
-      }px`;
+      this.body.style.bottom = `${root.offsetHeight - (root.offsetHeight - this.resizePosition.bottom) - 2
+        }px`;
       this.height = root.offsetHeight - this.resizePosition.bottom + 7 - e.clientY - 5;
       if (this.height > this.#minHeight) {
         this.body.style.height = `${this.height}px`;
@@ -257,9 +256,8 @@ class Window {
 
     const calculateLeftResizing = () => {
       this.body.style.left = 'auto';
-      this.body.style.right = `${
-        root.offsetWidth - (root.offsetWidth - this.resizePosition.right) - 2
-      }px`;
+      this.body.style.right = `${root.offsetWidth - (root.offsetWidth - this.resizePosition.right) - 2
+        }px`;
       this.width = root.offsetWidth - this.resizePosition.right + 7 - e.clientX - 5;
       if (this.width > this.#minWidth) {
         this.body.style.width = `${this.width}px`;
