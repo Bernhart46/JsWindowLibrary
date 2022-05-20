@@ -1,5 +1,5 @@
 :root {
-  --outside: -5px;
+  --outside: -3px;
   --width: 10px;
   --pos: 5px;
 }
@@ -16,7 +16,6 @@
   background-color: lightgray;
   border: solid black 1px;
   overflow: hidden;
-  background-size: cover;
   border-radius: 5px;
 }
 
@@ -31,10 +30,30 @@
   text-indent: 5px;
   cursor: pointer;
   color: lightgray;
-  -webkit-user-select: none; /* Chrome all / Safari all */
-  -moz-user-select: none; /* Firefox all */
-  -ms-user-select: none; /* IE 10+ */
-  user-select: none; /* Likely future */
+  -webkit-user-select: none;
+  /* Chrome all / Safari all */
+  -moz-user-select: none;
+  /* Firefox all */
+  -ms-user-select: none;
+  /* IE 10+ */
+  user-select: none;
+  /* Likely future */
+}
+
+.top-bar-title {
+  height: 100%;
+  width: calc(100% - 80px);
+}
+
+.content-body {
+  width: 100%;
+  height: calc(100% - 30px);
+  margin: 0;
+  position: absolute;
+  top: 30px;
+  left: 0;
+  overflow-wrap: break-word;
+  background-size: cover;
 }
 
 .exit-button {
@@ -75,6 +94,7 @@
 
 .border {
   position: absolute;
+  z-index: 1;
 }
 
 .TOP_BORDER-border {
@@ -84,6 +104,7 @@
   left: var(--pos);
   cursor: ns-resize;
 }
+
 .BOTTOM_BORDER-border {
   width: calc(100% - 10px);
   height: var(--width);
@@ -91,6 +112,7 @@
   left: var(--pos);
   cursor: ns-resize;
 }
+
 .RIGHT_BORDER-border {
   width: var(--width);
   height: calc(100% - 10px);
@@ -98,6 +120,7 @@
   right: var(--outside);
   cursor: ew-resize;
 }
+
 .LEFT_BORDER-border {
   width: var(--width);
   height: calc(100% - 10px);
@@ -110,6 +133,7 @@
   position: absolute;
   width: var(--width);
   height: var(--width);
+  z-index: 1;
 }
 
 .TOP_LEFT_CORNER-corner {
