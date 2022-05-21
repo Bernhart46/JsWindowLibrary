@@ -58,15 +58,15 @@ class Window {
       if (this.#isMoving) this.#moveWindow(e);
       if (this.#resizeType) this.#resizeWindow(e, this.#resizeType);
     };
+
     this.#upFunc = () => {
-      if (this.#isResizing) {
-        this.#isResizing = false;
-        this.#body.style.inset = `${this.#body.offsetTop}px auto auto ${this.#body.offsetLeft}px`;
-      }
+      this.#isResizing = false;
+      this.#body.style.inset = `${this.#body.offsetTop}px auto auto ${this.#body.offsetLeft}px`;
       this.#isMoving = false;
       this.#resizeType = undefined;
       root.style.cursor = "default";
     };
+
     const clickFunc = () => {
       for (let i = 0; i < root.children.length; i += 1) {
         if (zIndexCounter > 2147483638 - 1) {
@@ -116,15 +116,12 @@ class Window {
     this.#topBarTitle.innerText = this.#title;
 
     this.#topBarTitle.onmousedown = (e) => {
-      e.preventDefault();
-      if (e.target !== this.#topBarTitle) return;
+      if (e.target !== this.#topBarTitle || this.#isMaximized) return;
       this.#isMoving = true;
-      if (!this.#isMaximized) {
-        this.#position = {
-          top: e.offsetY,
-          left: e.offsetX,
-        };
-      }
+      this.#position = {
+        top: e.offsetY,
+        left: e.offsetX,
+      };
     };
     this.#topBarTitle.ondblclick = this.#maximizeWindow.bind(this);
     this.#createTopBarButtons();
@@ -154,24 +151,30 @@ class Window {
 
     const borderKeys = Object.keys(this.#borders);
 
+    const fixCursorWhenResize = (i) => {
+      switch (borderKeys[i]) {
+        case 'BOTTOM_BORDER':
+        case 'TOP_BORDER':
+          root.style.cursor = "ns-resize";
+          break;
+        case 'RIGHT_BORDER':
+        case 'LEFT_BORDER':
+          root.style.cursor = "ew-resize";
+          break;
+      }
+    }
+
     for (let i = 0; i < borderKeys.length; i += 1) {
       const border = this.#borders[borderKeys[i]];
       border.setAttribute('class', `border ${borderKeys[i]}-border`);
+
       border.onmousedown = (e) => {
         e.preventDefault();
         this.#isResizing = true;
         this.#resizeType = borderKeys[i];
-        //fix cursors
-        switch (borderKeys[i]) {
-          case 'BOTTOM_BORDER':
-          case 'TOP_BORDER':
-            root.style.cursor = "ns-resize";
-            break;
-          case 'RIGHT_BORDER':
-          case 'LEFT_BORDER':
-            root.style.cursor = "ew-resize";
-            break;
-        }
+
+        fixCursorWhenResize(i);
+
         this.#resizePosition = {
           right: root.offsetWidth - (this.#body.offsetLeft + this.#width),
           bottom: root.offsetHeight - (this.#body.offsetTop + this.#height),
@@ -191,26 +194,33 @@ class Window {
       BOTTOM_LEFT_CORNER: document.createElement('div'),
       BOTTOM_RIGHT_CORNER: document.createElement('div'),
     };
+
     const cornerKeys = Object.keys(this.#corners);
+
+    const fixCursorWhenResize = (i) => {
+      switch (cornerKeys[i]) {
+        case 'TOP_LEFT_CORNER':
+        case 'BOTTOM_RIGHT_CORNER':
+          root.style.cursor = "nwse-resize";
+          break;
+        case 'TOP_RIGHT_CORNER':
+        case 'BOTTOM_LEFT_CORNER':
+          root.style.cursor = "nesw-resize";
+          break;
+      }
+    }
 
     for (let i = 0; i < cornerKeys.length; i += 1) {
       const corner = this.#corners[cornerKeys[i]];
       corner.setAttribute('class', `corner ${cornerKeys[i]}-corner`);
+
       corner.onmousedown = (e) => {
         e.preventDefault();
         this.#isResizing = true;
         this.#resizeType = cornerKeys[i];
-        //fix cursors
-        switch (cornerKeys[i]) {
-          case 'TOP_LEFT_CORNER':
-          case 'BOTTOM_RIGHT_CORNER':
-            root.style.cursor = "nwse-resize";
-            break;
-          case 'TOP_RIGHT_CORNER':
-          case 'BOTTOM_LEFT_CORNER':
-            root.style.cursor = "nesw-resize";
-            break;
-        }
+
+        fixCursorWhenResize(i);
+
         this.#resizePosition = {
           right: root.offsetWidth - (this.#body.offsetLeft + this.#width),
           bottom: root.offsetHeight - (this.#body.offsetTop + this.#height),
@@ -235,41 +245,70 @@ class Window {
         break;
       }
     }
+
     document.removeEventListener('mousemove', this.#moveFunc);
     document.removeEventListener('mouseup', this.#upFunc);
     root.removeChild(node);
   }
 
   #maximizeWindow() {
-    if (this.#isMaximized) {
+    const toggleMaximize = () => {
       this.#isMaximized = !this.#isMaximized;
-      this.#body.style.cssText += `
+    }
+
+    const changeMaximizeIcon = (typeNumber) => {
+      if (typeNumber !== 1 && typeNumber !== 2) return;
+      if (typeNumber === 1) {
+        this.#maximizeButton.innerHTML = maximizeIcon1('#DEDEDE', '75%');
+        return;
+      }
+      if (typeNumber === 2) {
+        this.#maximizeButton.innerHTML = maximizeIcon2('#DEDEDE', '75%');
+        return;
+      }
+    }
+
+    const changeWindowSizes = (isMaximized) => {
+      if (!isMaximized) {
+        this.#body.style.cssText += `
         width: ${this.#width}px;
         height: ${this.#height}px;
         border-radius: 5px;
         top: ${this.#position.top}px;
         left: ${this.#position.left}px;
       `;
+        this.#topBar.style.width = `${this.#width}px`;
+        return;
+      }
 
-      this.#topBar.style.width = `${this.#width}px`;
-      this.#maximizeButton.innerHTML = maximizeIcon1('#DEDEDE', '75%');
+      if (isMaximized) {
+        this.#body.style.cssText += `
+          top: 0;
+          left: 0;
+          width: calc(100vw - 2px);
+          height:calc(100vh - 2px);
+          border-radius: 0px;
+        `;
+        this.#topBar.style.width = 'calc(100vw - 2px)';
+        return;
+      }
+    }
+
+    if (this.#isMaximized) {
+      toggleMaximize();
+      changeWindowSizes(this.#isMaximized)
+      changeMaximizeIcon(1);
       return;
     }
     if (!this.#isMaximized) {
-      this.#isMaximized = !this.#isMaximized;
+      toggleMaximize();
       this.#position = {
         top: this.#body.offsetTop,
         left: this.#body.offsetLeft,
       };
-      this.#body.style.cssText += `
-      top: 0;
-      left: 0;
-      width: calc(100vw - 2px);
-      height:calc(100vh - 2px);
-      border-radius: 0px;
-    `;
-      this.#topBar.style.width = 'calc(100vw - 2px)';
-      this.#maximizeButton.innerHTML = maximizeIcon2('#DEDEDE', '75%');
+      changeWindowSizes(this.#isMaximized)
+      changeMaximizeIcon(2);
+      return;
     }
   }
 
@@ -374,14 +413,6 @@ class Window {
 
   get width() {
     return this.#width;
-  }
-
-  setBackgroundColor(inputValue) {
-    this.#contentBody.style.backgroundColor = inputValue;
-  }
-
-  setBackgroundImage(inputValue) {
-    this.#contentBody.style.backgroundImage = `url(${inputValue})`;
   }
 }
 
